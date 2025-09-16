@@ -1,0 +1,48 @@
+-- Tabela de Autores
+CREATE TABLE authors (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    country VARCHAR(50),
+    birth_date DATE
+);
+
+-- Tabela de Livros
+CREATE TABLE books (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(200) NOT NULL,
+    publication_year INT,
+    language VARCHAR(20),
+    author_id INT REFERENCES authors(id)
+);
+
+-- Tabela de Traduções
+CREATE TABLE translations (
+    id SERIAL PRIMARY KEY,
+    book_id INT REFERENCES books(id),
+    language VARCHAR(20),
+    translator_name VARCHAR(100)
+);
+
+-- Tabela de Ilustrações
+CREATE TABLE illustrations (
+    id SERIAL PRIMARY KEY,
+    book_id INT REFERENCES books(id),
+    illustrator_name VARCHAR(100),
+    technique VARCHAR(100),
+    signed BOOLEAN
+);
+
+-- Tabela de Leituras
+CREATE TABLE readers (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100),
+    email VARCHAR(100),
+    country VARCHAR(50)
+);
+
+CREATE TABLE reading_history (
+    id SERIAL PRIMARY KEY,
+    reader_id INT REFERENCES readers(id),
+    book_id INT REFERENCES books(id),
+    read_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
