@@ -1,0 +1,8 @@
+import hou
+
+# cria uma esfera e conecta um nó de subdivisão
+geo = hou.node("/obj").createNode("geo", "MySphere")
+sphere = geo.createNode("sphere")
+subdiv = geo.createNode("subdivide")
+subdiv.setInput(0, sphere)
+subdiv.moveToGoodPosition()
