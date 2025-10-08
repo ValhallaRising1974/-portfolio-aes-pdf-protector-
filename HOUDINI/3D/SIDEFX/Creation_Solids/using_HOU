@@ -1,0 +1,39 @@
+# houdini_geometry_creator.py
+# Autor: MSP 2025 – Valhalla Rising | Supreme Being
+# Descrição: Criação de sólidos básicos no Houdini via Python
+
+import hou
+
+def criar_sólidos_basicos():
+    # Cria um novo objeto (Geometry Node) na /obj
+    obj_node = hou.node("/obj")
+    geo_node = obj_node.createNode("geo", "Sólidos_Básicos")
+    geo_node.moveToGoodPosition()
+
+    # Remove o file node padrão
+    file_node = geo_node.node("file1")
+    if file_node:
+        file_node.destroy()
+
+    # Cubo
+    cubo = geo_node.createNode("box", "Cubo")
+    cubo.parmTuple("size").set((1, 1, 1))
+    cubo.parmTuple("t").set((-2, 0, 0))
+
+    # Esfera
+    esfera = geo_node.createNode("sphere", "Esfera")
+    esfera.parm("type").set("poly")  # Tipo poligonal
+    esfera.parmTuple("t").set((0, 0, 0))
+
+    # Toroide
+    toroide = geo_node.createNode("torus", "Toroide")
+    toroide.parm("type").set("poly")
+    toroide.parmTuple("t").set((2, 0, 0))
+
+    # Organiza visualmente os nós
+    geo_node.layoutChildren()
+
+    print("✅ Sólidos criados com sucesso!")
+
+# Executar a função
+criar_sólidos_basicos()
